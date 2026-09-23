@@ -1,0 +1,10 @@
+name: ProbeFull
+on: [push]
+jobs:
+  repro:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "PROBE-FULL high-signal"
+          ls -la
