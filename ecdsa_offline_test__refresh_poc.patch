@@ -1,13 +1,12 @@
 diff --git a/test/cosigner/ecdsa_offline_test.cpp b/test/cosigner/ecdsa_offline_test.cpp
+index bf5e2ad..b805567 100644
 --- a/test/cosigner/ecdsa_offline_test.cpp
 +++ b/test/cosigner/ecdsa_offline_test.cpp
-@@ -574,5 +574,6 @@ TEST_CASE("cmp_offline_ecdsa") {
-         for (auto i = players.begin(); i != players.end(); ++i)
-         {
-             auto info = std::make_unique<key_refresh_info>(i->first, i->second, services.at(i->first)->persistency);
+@@ -574,6 +574,7 @@ TEST_CASE("cmp_offline_ecdsa") {
              refresh_info.emplace(i->first, std::move(info));
          }
          key_refresh(refresh_info, keyid, pubkey);
-+        ecdsa_preprocess(services, keyid, 10, BLOCK_SIZE, BLOCK_SIZE, fireblocks::common::cosigner::MPC_PROTOCOL_VERSION);
++           ecdsa_preprocess(services, keyid, 10, BLOCK_SIZE, BLOCK_SIZE, fireblocks::common::cosigner::MPC_PROTOCOL_VERSION);
          ecdsa_sign(services, ECDSA_SECP256K1, keyid, 9, 1, pubkey, chaincode, derivation_paths);
      }
+ 
