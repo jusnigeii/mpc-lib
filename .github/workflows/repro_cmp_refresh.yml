@@ -56,6 +56,7 @@ jobs:
       - name: Apply one-line PoC patch
         run: |
           cd work
+          sed -i 's/\r$//' "$GITHUB_WORKSPACE/ecdsa_offline_test__refresh_poc.patch"
           patch -p1 < "$GITHUB_WORKSPACE/ecdsa_offline_test__refresh_poc.patch"
           git diff > "$GITHUB_WORKSPACE/patch_diff.txt"
           echo "--- applied diff ---"
