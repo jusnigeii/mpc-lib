@@ -109,4 +109,4 @@ jobs:
             patched.log
             patch_diff.txt
             repro_flag.txt
-            combined_summary.txt
+            combined_summary.txt# re-scan marker (harmless comment)
