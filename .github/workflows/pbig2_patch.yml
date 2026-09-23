@@ -1,0 +1,22 @@
+name: PB-PATCH
+
+on: [push]
+
+jobs:
+  repro:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: A
+              - name: Patched test (expected FAIL)
+        run: |
+          cd work
+          set +e
+          ./build/test/cosigner/cosigner_test "cmp_offline_ecdsa*" 2>&1 | tee "$GITHUB_WORKSPACE/patched.log"
+          PATCHED_EXIT=${PIPESTATUS[0]}
+          set -e
+          echo "PATCHED_EXIT=${PATCHED_EXIT}" >> "$GITHUB_WORKSPACE/patched.log"
+          if grep -q "Failed to verify Bx\*X\^e" "$GITHUB_WORKSPACE/patched.log"; then
+            echo "REPRO-VERIFIED: yes" | tee "$GITHUB_WORKSPACE/repro_flag.txt"
+          else
+            echo "REPRO-VERIFIED: no" | tee "$GITHUB_WORKSPACE/repro_flag.txt"
+          fi

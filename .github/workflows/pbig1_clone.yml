@@ -1,0 +1,18 @@
+name: PB-CLONE
+
+on: [push]
+
+jobs:
+  repro:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: A
+              - name: Clone pinned upstream revision
+        run: |
+          git clone --quiet https://github.com/fireblocks/mpc-lib.git work
+          cd work
+          git checkout -q 00ae08b7f1bdbb887aedece384aca2f942aae432
+          {
+            echo "revision: $(git rev-parse HEAD)"
+            uname -a
+          } | tee "$GITHUB_WORKSPACE/env.txt"
