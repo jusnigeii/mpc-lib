@@ -1,4 +1,4 @@
-name: CMP Refresh PoC reproduction
+﻿name: CMP Refresh PoC reproduction
 
 # Add this workflow to YOUR FORK of fireblocks/mpc-lib and push.
 # It clones the pinned revision, builds it, runs the bundled test (baseline,
@@ -109,4 +109,4 @@ jobs:
             patched.log
             patch_diff.txt
             repro_flag.txt
-            combined_summary.txt# re-scan marker (harmless comment)
+            combined_summary.txttimeout-minutes: 60
