@@ -1,0 +1,37 @@
+name: Xx5
+
+on: [push]
+
+jobs:
+  repro:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmp-refresh-poc-evidence
+          path: |
+            env.txt
+            baseline.log
+            combined_summary.txt
+      - name: Rebuild
+        run: |
+          cd work
+          cmake --build build -j $(nproc)
+      - name: Baseline test (expected PASS)
+        run: |
+          cd work
+          set +e
+          ./build/test/cosigner/cosigner_test "cmp_offline_ecdsa*" 2>&1 | tee "$GITHUB_WORKSPACE/baseline.log"
+          echo "BASELINE_EXIT=${PIPESTATUS[0]}" | tee -a "$GITHUB_WORKSPACE/baseline.log"
+          set -e
+          test "$(grep BASELINE_EXIT "$GITHUB_WORKSPACE/baseline.log" | cut -d= -f2)" = "0"
+      - name: Patched test (expected FAIL)
+        run: |
+          cd work
+          set +e
+          ./build/test/cosigner/cosigner_test "cmp_offline_ecdsa*" 2>&1 | tee "$GITHUB_WORKSPACE/patched.log"
+          PATCHED_EXIT=${PIPESTATUS[0]}
+          set -e
+          echo "PATCHED_EXIT=${PATCHED_EXIT}" >> "$GITHUB_WORKSPACE/patched.log"
