@@ -96,7 +96,8 @@ jobs:
           cat combined_summary.txt
 
       - name: Self-check repro
-        run: grep -q "REPRO-VERIFIED: yes" repro_flag.txt
+        run: |
+          grep -q "REPRO-VERIFIED: yes" repro_flag.txt
 
       - name: Upload evidence
         if: always()
