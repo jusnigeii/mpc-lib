@@ -1,9 +1,8 @@
 ﻿name: CMP Refresh PoC reproduction
 
-# Add this workflow to YOUR FORK of fireblocks/mpc-lib and push.
-# It clones the pinned revision, builds it, runs the bundled test (baseline,
-# expected PASS), applies the one-line PoC patch, rebuilds, runs again
-# (expected FAIL), and uploads all logs as an artifact.
+# Builds fireblocks/mpc-lib at the pinned revision, runs the bundled
+# cmp_offline_ecdsa test (baseline, expected PASS), applies the one-line
+# PoC patch, rebuilds, runs again (expected FAIL), and uploads all logs.
 
 on:
   workflow_dispatch:
@@ -16,6 +15,7 @@ permissions:
 jobs:
   repro:
     runs-on: ubuntu-22.04
+    timeout-minutes: 60
     steps:
       - name: Checkout fork (workflow + patch file)
         uses: actions/checkout@v4
@@ -109,4 +109,4 @@ jobs:
             patched.log
             patch_diff.txt
             repro_flag.txt
-            combined_summary.txttimeout-minutes: 60
+            combined_summary.txt
