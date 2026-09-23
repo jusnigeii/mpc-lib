@@ -1,0 +1,8 @@
+name: Probe
+on: [push]
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "PROBE-OK hi from probe workflow"
